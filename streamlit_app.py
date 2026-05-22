@@ -10,7 +10,6 @@ st.caption("Automated Extraction & High-Speed Policy Risk Analysis Pipeline")
 
 st.markdown("---")
 
-# Define strict operational boundaries
 # Updated strict operational boundaries
 SIZE_LIMIT_MB = 100
 TOTAL_BATCH_LIMIT_MB = 1024
@@ -65,17 +64,7 @@ if uploaded_files:
                 st.error(f"⚠️ Could not parse structural layers for {uploaded_file.name}: {file_error}")
 
         if valid_files_processed:
-            st.success(f"✅ Input Pipeline Synchronized! Successfully processed {len(valid_files_processed)} source documents.")
-            
-            # Combine the individual text chunks into our master processing corpus
-            all_extracted_corporate_text += f"\n--- DOCUMENT SOURCE: {uploaded_file.name} ---\n" + file_text_accumulator
-            valid_files_processed.append(uploaded_file.name)
-            
-        except Exception as file_error:
-            st.error(f"⚠️ Could not parse structural layers for {uploaded_file.name}: {file_error}")
-
-    if valid_files_processed:
-        st.success(f"✅ Input Pipeline Synchronized! Successfully stored text layers from {len(valid_files_processed)} source documents.")
+            st.success(f"✅ Input Pipeline Synchronized! Successfully stored text layers from {len(valid_files_processed)} source documents.")
 
 st.markdown("---")
 
