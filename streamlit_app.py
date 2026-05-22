@@ -101,8 +101,9 @@ if st.button("Run Comprehensive ESG Cross-Audit"):
         
         with st.spinner("AI engine cross-referencing multi-file text data against auditing standards..."):
             try:
-                # Initialize direct API communication link with the Gemini engine
-                client = genai.Client()
+                # Manually inject the secret key directly into the client initializer
+                api_key_secret = st.secrets["GEMINI_API_KEY"]
+                client = genai.Client(api_key=api_key_secret)
                 response = client.models.generate_content(
                     model='gemini-2.5-flash',
                     contents=audit_prompt,
