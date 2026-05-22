@@ -11,12 +11,16 @@ st.caption("Automated Extraction & High-Speed Policy Risk Analysis Pipeline")
 st.markdown("---")
 
 # Define strict operational boundaries
-SIZE_LIMIT_MB = 10
-MAX_BYTES = SIZE_LIMIT_MB * 1024 * 1024
+# Updated strict operational boundaries
+SIZE_LIMIT_MB = 100
+TOTAL_BATCH_LIMIT_MB = 1024
+
+MAX_BYTES_PER_FILE = SIZE_LIMIT_MB * 1024 * 1024
+MAX_TOTAL_BYTES = TOTAL_BATCH_LIMIT_MB * 1024 * 1024
 
 # 2. Folder Upload Interface Simulation (The "reports" Input Block)
 st.subheader("📂 Step 1: Input Corporate Documentation Drop zone")
-st.markdown("Drop multiple annual files or sustainability records here. System constraint: **Max 10MB per PDF**.")
+st.markdown("Drop multiple annual files or sustainability records here. System constraint: **Max 100MB per PDF**.")
 
 uploaded_files = st.file_uploader(
     "Upload corporate documents into the active processing queue:",
@@ -27,23 +31,41 @@ uploaded_files = st.file_uploader(
 # 3. Dynamic Text Layer Extraction Matrix
 all_extracted_corporate_text = ""
 valid_files_processed = []
+running_total_bytes = 0
 
 if uploaded_files:
+    # First, calculate total size of the batch
     for uploaded_file in uploaded_files:
-        # Enforce size gate constraints
-        if uploaded_file.size > MAX_BYTES:
-            st.error(f"❌ File Rejected: {uploaded_file.name} exceeds the safe operational limit of {SIZE_LIMIT_MB}MB.")
-            continue
-            
-        st.write(f"⏳ Processing layer: `{uploaded_file.name}` ({uploaded_file.size / 1024 / 1024:.2f} MB)")
+        running_total_bytes += uploaded_file.size
         
-        try:
-            pdf_reader = PdfReader(uploaded_file)
-            file_text_accumulator = ""
-            for page in pdf_reader.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    file_text_accumulator += page_text + "\n"
+    # Check if total batch exceeds 1GB
+    if running_total_bytes > MAX_TOTAL_BYTES:
+        st.error(f"❌ Batch Rejected: Total size ({running_total_bytes / 1024 / 1024:.2f} MB) exceeds the 1GB system limit.")
+    else:
+        for uploaded_file in uploaded_files:
+            # Enforce individual 100MB gate constraint
+            if uploaded_file.size > MAX_BYTES_PER_FILE:
+                st.error(f"❌ File Rejected: {uploaded_file.name} exceeds the 100MB limit.")
+                continue
+                
+            st.write(f"⏳ Processing layer: `{uploaded_file.name}` ({uploaded_file.size / 1024 / 1024:.2f} MB)")
+            
+            try:
+                pdf_reader = PdfReader(uploaded_file)
+                file_text_accumulator = ""
+                for page in pdf_reader.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        file_text_accumulator += page_text + "\n"
+                
+                all_extracted_corporate_text += f"\n--- DOCUMENT SOURCE: {uploaded_file.name} ---\n" + file_text_accumulator
+                valid_files_processed.append(uploaded_file.name)
+                
+            except Exception as file_error:
+                st.error(f"⚠️ Could not parse structural layers for {uploaded_file.name}: {file_error}")
+
+        if valid_files_processed:
+            st.success(f"✅ Input Pipeline Synchronized! Successfully processed {len(valid_files_processed)} source documents.")
             
             # Combine the individual text chunks into our master processing corpus
             all_extracted_corporate_text += f"\n--- DOCUMENT SOURCE: {uploaded_file.name} ---\n" + file_text_accumulator
