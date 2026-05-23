@@ -11,20 +11,24 @@ from docx.oxml.ns import nsdecls, qn
 import io
 
 # ==============================================================================
-# HIGH-END ENTERPRISE INTERFACE CUSTOM GLASSMOPHISM STYLING (CSS INJECTION)
+# HIGH-END CORPORATE INTERFACE STYLING (CSS INJECTION OVERRIDES)
 # ==============================================================================
-st.set_page_config(page_title="Enterprise ESG Engine", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(
+    page_title="Apex ESG Engine", 
+    layout="wide", 
+    initial_sidebar_state="collapsed"
+)
 
 st.markdown("""
     <style>
-    /* Global Background & Body Fonts */
+    /* Global Canvas Reset */
     .stApp {
         background-color: #F8FAFC !important;
         font-family: 'Inter', 'Segoe UI', system-ui, sans-serif !important;
     }
     
-    /* Executive Main Title Banner */
-    .main-header-card {
+    /* Executive Header Banner */
+    .executive-header-card {
         background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%);
         padding: 2.5rem 2rem;
         border-radius: 12px;
@@ -32,38 +36,54 @@ st.markdown("""
         box-shadow: 0 10px 25px -5px rgba(11, 25, 44, 0.15);
         margin-bottom: 2rem;
     }
-    .main-header-card h1 {
+    .executive-header-card h1 {
         color: #FFFFFF !important;
-        font-size: 2.2rem !important;
+        font-size: 2.4rem !important;
         font-weight: 700 !important;
         letter-spacing: -0.05em;
         margin: 0 0 0.5rem 0 !important;
     }
-    .main-header-card p {
+    .executive-header-card p {
         color: #94A3B8 !important;
-        font-size: 1rem !important;
+        font-size: 1.05rem !important;
         margin: 0 !important;
     }
     
-    /* Clean Cards for Drag & Drop Workspace Zones */
-    .workspace-card {
+    /* Corporate Panel Containers */
+    .corporate-panel-card {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 12px;
-        padding: 1.5rem;
+        padding: 1.75rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         margin-bottom: 1.5rem;
+        min-height: 280px;
     }
     
-    /* Custom Styling for Streamlit Native Elements via Selectors */
+    .panel-title {
+        color: #0B192C !important;
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.25rem !important;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #F1F5F9;
+    }
+    
+    .panel-subtitle {
+        color: #64748B !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+    
+    /* Streamlit File Uploader Box Tweaks */
     div[data-testid="stFileUploader"] {
         border: 2px dashed #CBD5E1 !important;
         border-radius: 8px !important;
-        background: #F1F5F9 !important;
-        padding: 1rem !important;
+        background: #F8FAFC !important;
+        padding: 0.75rem !important;
     }
     
-    /* Custom High-Status Corporate Tabs */
+    /* High-Status Corporate Tabs Navigation */
     button[data-baseweb="tab"] {
         font-size: 16px !important;
         font-weight: 600 !important;
@@ -76,7 +96,7 @@ st.markdown("""
         border-bottom: 3px solid #1E3E62 !important;
     }
     
-    /* Premium Data Grid Metric Badges */
+    /* Statutory Omission Indicator Badges */
     .omitted-badge {
         background-color: #FFE4E6 !important;
         color: #991B1B !important;
@@ -88,7 +108,7 @@ st.markdown("""
         display: inline-block;
     }
     
-    /* Download Call-To-Action Button overrides */
+    /* Action Button Custom Overrides */
     div.stDownloadButton > button {
         background: #10B981 !important;
         color: white !important;
@@ -106,11 +126,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Render Header Card View Component
+# Render Application Branding Header
 st.markdown("""
-    <div class="main-header-card">
-        <h1>🏛️ GovGuard: Enterprise ESG Core Engine</h1>
-        <p>SEC Automated Compliance Pipeline • Synchronized with Companies Act 2017, SOE Act 2023, SOE Policy, SECP ESG Guidelines, IFRS S1/S2 & ISO 20400 Protocols</p>
+    <div class="executive-header-card">
+        <h1>🏛️ ESG Report Generator & Compliance Audit Guide</h1>
+        <p>Enterprise Regulatory Pipeline • Synchronized with Companies Act 2017 (Sec 238), SOE Act 2023, SOE Policy, SECP Guidelines, IFRS S1/S2 & ISO 20400 Protocols</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -230,52 +250,75 @@ def add_executive_data_table(doc, headers, rows, hex_header_color="0B192C"):
 # ==============================================================================
 tab1, tab2, tab3 = st.tabs([
     "📥 Upload Company Repository Data", 
-    "📊 Gap Audit Summary", 
-    "📜 Comprehensive ESG Report Portfolio"
+    "📊 Gap Audit Summary & Guidance", 
+    "📜 Generated ESG Report Portfolio"
 ])
 
 with tab1:
-    st.markdown('<div class="workspace-card">', unsafe_allow_html=True)
-    st.subheader("🛠️ Enterprise Data Influx Portal")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Company Data & Annual Report Influx**")
-        uploaded_report = st.file_uploader("Upload Core Operational Document / Annual Corporate Strategy File (PDF):", type=["pdf"], key="core_report_uploader")
-    with col2:
-        st.markdown("**Statutory Amendments, Gazettes, and Circular Influx**")
-        uploaded_gazette = st.file_uploader("Upload SECP Directives / State-Owned Enterprise Circular Regulatory Patches (PDF):", type=["pdf"], key="statutory_patch_uploader")
-    st.markdown('</div>', unsafe_allow_html=True)
+    # Explicit Side-by-Side Corporate Layout Panel Split
+    col_left, col_right = st.columns(2)
+    
+    with col_left:
+        st.markdown("""
+            <div class="corporate-panel-card">
+                <div class="panel-title">📁 Company Data & Annual Report Influx</div>
+                <div class="panel-subtitle">Primary ingestion path for core operational statements, annual data profiles, and strategic summaries.</div>
+            </div>
+        """, unsafe_allow_html=True)
+        # Position actual interactive file picker cleanly inside the column space
+        uploaded_report = st.file_uploader(
+            "Select corporate asset (PDF):", 
+            type=["pdf"], 
+            key="core_report_uploader",
+            label_visibility="collapsed"
+        )
+        
+    with col_right:
+        st.markdown("""
+            <div class="corporate-panel-card">
+                <div class="panel-title">📜 Statutory Amendments, Gazettes & Circular Influx</div>
+                <div class="panel-subtitle">Secondary structural patch path for parsing direct SECP orders, sovereign gazette filings, and circular parameters.</div>
+            </div>
+        """, unsafe_allow_html=True)
+        uploaded_gazette = st.file_uploader(
+            "Select regulatory override patch (PDF):", 
+            type=["pdf"], 
+            key="statutory_patch_uploader",
+            label_visibility="collapsed"
+        )
 
     if uploaded_report and not st.session_state.uploaded_report_text:
         if uploaded_report.size > MAX_FILE_SIZE_BYTES:
-            st.error("❌ Transmission error: Repository payload limits exceeded (Max 100MB).")
+            st.error("❌ Transmission limitation exceeded: Target repository data file restricted to 100MB max bounds.")
         else:
-            with st.spinner("Processing framework ingestion streams..."):
+            with st.spinner("Extracting institutional operating vectors..."):
                 reader = PdfReader(uploaded_report)
                 st.session_state.uploaded_report_text = "".join([page.extract_text() or "" for page in reader.pages])
-                st.success("Core enterprise profile compiled into system cache memory.")
+                st.success("Primary enterprise metrics safely structured in cache.")
+                st.rerun()
                 
     if uploaded_gazette and not st.session_state.gazette_override_text:
-        with st.spinner("Syncing specific statutory circular updates..."):
+        with st.spinner("Parsing secondary statutory amendments..."):
             reader = PdfReader(uploaded_gazette)
             st.session_state.gazette_override_text = "".join([page.extract_text() or "" for page in reader.pages])
-            st.info("Live corporate governance updates and statutory patches dynamically active.")
+            st.info("Dynamic sovereign circular parameters active within tracking logic.")
+            st.rerun()
 
 # ==============================================================================
-# CORE AI COMPLIANCE EXTRACTION MATRIX
+# STRATEGIC PARSING PIPELINE ENGINE (VERIFIED INTEGRATED COMPLIANCE LOGIC)
 # ==============================================================================
 if st.session_state.uploaded_report_text and not st.session_state.pipeline_completed:
-    override_rules = st.session_state.gazette_override_text if st.session_state.gazette_override_text else "No dynamic secondary circular parameters specified."
+    override_rules = st.session_state.gazette_override_text if st.session_state.gazette_override_text else "No continuous monitoring amendments active."
     
     orchestration_prompt = f"""
-    You are an enterprise regulatory audit system specializing in Pakistani corporate governance frameworks. Process the corporate text corpus against the following exact mandates:
-    - Companies Act, 2017: Section 232 (Approval Mechanisms) & Section 238 (Sustainability and Corporate Social Responsibility Disclosures).
+    You are an elite legal regulatory audit engine specializing in Pakistani corporate compliance frameworks. Process the corporate text corpus against the following exact mandates:
+    - Companies Act, 2017: Section 232 (Approval Mechanics) & Section 238 (Mandatory Corporate Social Responsibility and Environmental Disclosures).
     - State-Owned Enterprises (Governance and Operations) Act, 2023.
-    - SOE Ownership and Management Policy, 2023 (Central Monitoring Unit requirements, Conflict of Interest Guidelines, and Performance Benchmarks).
+    - SOE Ownership and Management Policy, 2023 (Central Monitoring Unit benchmarks, Conflict of Interest Declarations, and Performance Metrics).
     - SECP Voluntary Guidelines on ESG Disclosures for Listed Companies, 2023.
-    - Global Benchmarks: IFRS S1 (General Disclosures), IFRS S2 (Climate-related Information), and ISO 20400:2017 (Sustainable Procurement Standards).
+    - Global Benchmarks: IFRS S1 (General Sustainability Disclosures), IFRS S2 (Climate-related Information disclosures), and ISO 20400:2017 (Sustainable Procurement Standards).
     
-    Generate an exhaustive, long-form statutory reporting suite containing comprehensive itemized metrics.
+    Generate an intense, long-form statutory reporting suite containing comprehensive itemized metrics.
     
     If any core disclosure parameter is missing or non-disclosed in the text corporate profile, it must be explicitly flagged as "[OMITTED / DATA NOT AVAILABLE]" inside the report data structures and thoroughly evaluated as a statutory compliance gap.
 
@@ -312,7 +355,7 @@ if st.session_state.uploaded_report_text and not st.session_state.pipeline_compl
     - Governance Pillars: Board Independence Ratios, Gender Diversity (Female Directors under Corporate Governance Codes), Performance-Linked Variable Remuneration, Supplier Code of Conduct Adherence, Ethics & Anti-Corruption Training Sign-offs (SOE Policy 2023), Integrated Financial and Non-Financial Disclosures, and External Third-Party Audit Assurance Matrices.
     """
     
-    with st.spinner("Processing complex multi-standard regulatory data streams..."):
+    with st.spinner("Orchestrating structural compliance matrices against legal guidelines..."):
         try:
             client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
             response = client.models.generate_content(
@@ -322,19 +365,20 @@ if st.session_state.uploaded_report_text and not st.session_state.pipeline_compl
             )
             st.session_state.audit_data_cache = json.loads(response.text)
             st.session_state.pipeline_completed = True
+            st.rerun()
         except Exception as err:
             st.error(f"Pipeline Execution Failure: {err}")
 
 # ==============================================================================
-# VIEW RENDERING TAB 2: EXECS GAP MATRIX
+# TAB 2 VISUALIZATION: RISK ASSESSMENT INTERFACE
 # ==============================================================================
 with tab2:
     if not st.session_state.pipeline_completed:
-        st.info("Awaiting structural data vectors within the repository portal to execute automated compliance mapping.")
+        st.info("Awaiting file uploads in the repository section to activate automated statutory monitoring workflows.")
     else:
         audit_payload = st.session_state.audit_data_cache.get("gap_audit", {})
         
-        # Word File Constructor
+        # Build Gap Audit Document
         audit_doc = Document()
         apply_executive_formatting(audit_doc, "Statutory ESG Gap Audit Advisory Report")
         
@@ -367,22 +411,21 @@ with tab2:
         audit_doc.save(audit_buf)
         audit_buf.seek(0)
         
-        # UI Presentation Components
         col_dl, _ = st.columns([1, 3])
         with col_dl:
-            st.download_button("📥 Export Gap Audit (.DOCX)", data=audit_buf, file_name="Regulatory_ESG_Gap_Audit.docx")
+            st.download_button("📥 Export Gap Audit (.DOCX)", data=audit_buf, file_name="Statutory_Regulatory_Gap_Audit.docx")
             
-        st.markdown('<div class="workspace-card">', unsafe_allow_html=True)
-        st.subheader("Executive Framework Compliance Assessment")
+        st.markdown('<div class="corporate-panel-card">', unsafe_allow_html=True)
+        st.subheader("Executive Statutory Assessment Overview")
         st.write(audit_payload.get("executive_summary"))
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ==============================================================================
-# VIEW RENDERING TAB 3: LONG FORMAL ESG DISCLOSURE SUITE
+# TAB 3 VISUALIZATION: STATUTORY REPORTING PANEL
 # ==============================================================================
 with tab3:
     if not st.session_state.pipeline_completed:
-        st.info("Awaiting structural data vectors within the repository portal to execute automated compliance mapping.")
+        st.info("Awaiting file uploads in the repository section to activate automated statutory monitoring workflows.")
     else:
         esg_payload = st.session_state.audit_data_cache.get("esg_report", {})
         
@@ -391,8 +434,8 @@ with tab3:
         
         add_executive_heading(esg_doc, "Document Layout Index Directory", level=1)
         add_justified_paragraph(esg_doc, "1. Strategic Corporate Stance & Technological Vision Statements................................................ Page 1")
-        add_justified_paragraph(esg_doc, "2. Environmental (E) Performance Metrics & Asset Data Grids (IFRS TCFD / SECP).................................. Page 2")
-        add_justified_paragraph(esg_doc, "3. Social (S) Responsibility Frameworks & Sustainable Sourcing Performance (IFRS / ISO 20400).............. Page 3")
+        add_justified_paragraph(esg_doc, "2. Environmental (E) Performance Metrics & Asset Data Grids (IFRS S2 / SECP Guidelines)......................... Page 2")
+        add_justified_paragraph(esg_doc, "3. Social (S) Responsibility Frameworks & Sustainable Sourcing Performance (IFRS S1 / ISO 20400).............. Page 3")
         add_justified_paragraph(esg_doc, "4. Corporate Governance (G) Control Metrics & Board Integrity Grids (Companies Act / SOE Act / SOE Policy). Page 4")
         
         add_executive_heading(esg_doc, "1. Strategic Corporate Stance & Technological Vision Statements", level=1)
@@ -409,7 +452,7 @@ with tab3:
         add_justified_paragraph(esg_doc, esg_payload.get("soc_narrative", ""))
         
         add_executive_heading(esg_doc, "4. Corporate Governance (G) Control Metrics & Board Integrity Grids (SOE Act 2023 / Companies Act / SOE Policy)", level=1)
-        add_executive_data_table(esg_doc, ["SECP Governance Indicator", "Disclosed Value / Asset Standing", "Framework Reference Mapping"], esg_payload.get("gov_table_data", []), hex_header_color="1E3E62")
+        add_executive_data_table(doc=esg_doc, headers=["SECP Governance Indicator", "Disclosed Value / Asset Standing", "Framework Reference Mapping"], rows=esg_payload.get("gov_table_data", []), hex_header_color="1E3E62")
         add_executive_heading(esg_doc, "Exhaustive Governance Control, Internal Risk Management, and Assurance Analysis", level=2)
         add_justified_paragraph(esg_doc, esg_payload.get("gov_narrative", ""))
         
@@ -420,14 +463,9 @@ with tab3:
         col_dl2, _ = st.columns([1, 3])
         with col_dl2:
             st.download_button("📥 Export Formal ESG Disclosures (.DOCX)", data=esg_buf, file_name="Formal_Corporate_ESG_Disclosures.docx")
-            
-        st.markdown('<div class="workspace-card">', unsafe_allow_html=True)
-        st.subheader("Strategic Corporate Footprint Alignment")
-        st.write(esg_payload.get("company_vision"))
-        st.markdown('</div>', unsafe_allow_html=True)
 
-        # On-Screen Interactive UX Grids for Review Team
-        st.markdown("### Interactive Structural Review Panel")
+        # Interactive High-Status Review Grid
+        st.markdown("### Interactive Dashboard Review Panel")
         c1, c2, c3 = st.columns(3)
         with c1:
             st.info("☘️ Environmental Disclosures Mapped")
@@ -435,18 +473,18 @@ with tab3:
                 if "[OMITTED]" in str(row[1]).upper() or "DATA NOT AVAILABLE" in str(row[1]).upper():
                     st.markdown(f"**{row[0]}:** <span class='omitted-badge'>Omitted Data Gap</span>", unsafe_allow_html=True)
                 else:
-                    st.markdown(f"**{row[0]}:** `{row[1]}`", unsafe_allow_html=True)
+                    st.markdown(f"**{row[0]}:** `{row[1]}`")
         with c2:
             st.info("🤝 Social Disclosures Mapped")
             for row in esg_payload.get("soc_table_data", [])[1:]:
                 if "[OMITTED]" in str(row[1]).upper() or "DATA NOT AVAILABLE" in str(row[1]).upper():
                     st.markdown(f"**{row[0]}:** <span class='omitted-badge'>Omitted Data Gap</span>", unsafe_allow_html=True)
                 else:
-                    st.markdown(f"**{row[0]}:** `{row[1]}`", unsafe_allow_html=True)
+                    st.markdown(f"**{row[0]}:** `{row[1]}`")
         with c3:
             st.info("🏛️ Governance Indicators Mapped")
             for row in esg_payload.get("gov_table_data", [])[1:]:
                 if "[OMITTED]" in str(row[1]).upper() or "DATA NOT AVAILABLE" in str(row[1]).upper():
                     st.markdown(f"**{row[0]}:** <span class='omitted-badge'>Omitted Data Gap</span>", unsafe_allow_html=True)
                 else:
-                    st.markdown(f"**{row[0]}:** `{row[1]}`", unsafe_allow_html=True)
+                    st.markdown(f"**{row[0]}:** `{row[1]}`")
